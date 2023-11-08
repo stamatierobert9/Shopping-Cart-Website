@@ -1,26 +1,34 @@
 <template>
-  <router-view/>
+  <header>
+    <v-toolbar title="Application">
+      <v-btn
+          @click="router.push({ name: 'CartView' })"
+          color="primary"
+          variant="elevated"
+      >Items in Cart: {{ store.cart.length }}
+      </v-btn>
+    </v-toolbar>
+  </header>
+  <main>
+    <RouterView />
+  </main>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script setup>
+import { useRouter } from "vue-router";
+import { productsStore } from "@/stores/products";
 
-nav {
-  padding: 30px;
-}
+const router = useRouter()
+const store = productsStore()
+</script>
 
-nav a {
+
+<style scoped>
+.cart-items {
+  text-align: end;
+  padding: 16px;
   font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  font-size: 24px;
+  cursor: pointer;
 }
 </style>
