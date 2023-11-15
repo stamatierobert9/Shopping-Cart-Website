@@ -13,7 +13,9 @@ export const productsStore = defineStore('products', {
                 .then(res => res.json())
                 .then(json => {
                     this.products = json.products;
+                    this.products.quantity = 0;
                 })
+
         },
 
         addToCart(product) {

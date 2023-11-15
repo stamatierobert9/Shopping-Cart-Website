@@ -1,11 +1,24 @@
 <template>
   <header>
-    <v-toolbar title="Application">
+    <v-toolbar>
       <v-btn
+          @click="router.push({ name: 'Catalog' })"
+          color="primary"
+          variant="elevated"
+      >Catalog
+      </v-btn>
+      <v-btn
+          @click="router.push({ name: 'Home' })"
+          color="primary"
+          variant="elevated"
+      >Home
+      </v-btn>
+
+      <v-btn icon="$vuetify"
           @click="router.push({ name: 'CartView' })"
           color="primary"
           variant="elevated"
-      >Items in Cart: {{ store.cart.length }}
+      >{{ store.cart.length }}
       </v-btn>
     </v-toolbar>
   </header>

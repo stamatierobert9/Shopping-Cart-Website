@@ -22,7 +22,6 @@
       >Add to cart</v-btn>
     </div>
   </div>
-  <button @click="addToCart">Add to Cart</button>
 </template>
 
 <script>
@@ -47,6 +46,7 @@ const selectedProduct = computed(() => {
 
 const addToCart = () => {
   store.addToCart(selectedProduct.value);
+  // $emit('incquantity', selectedProduct.value.id)
 }
 </script>
 
