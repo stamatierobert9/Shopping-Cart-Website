@@ -1,9 +1,10 @@
-import router from "@/router";
+// import router from "@/router";
 import {ref} from "vue";
+import {reactive} from "vue";
 
 
 export const products= ref([]);
-export let cart={};
+export let cart=reactive({});
 
 
 export function fetchProductsFromDB() {
@@ -28,11 +29,10 @@ export function addToCart(product) {
     }
 }
 
-export function removeFromCart(id) {
-    console.log('>>>>> ID', id)
-    delete cart[id]
-    console.log('>>>>> CART', cart)
-    router.push({name: 'CartView'})
+export function removeFromCart(productId) {
+    if (cart[productId]) {
+        delete cart[productId];
+    }
 }
 
 export function getUniqueCategories() {

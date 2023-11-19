@@ -36,7 +36,7 @@
     <!-- Footer -->
     <v-footer color="indigo" app padless>
       <v-col class="text-center white--text" cols="12">
-        © 2023 Your Company Name
+        © 2023 TeleShop
       </v-col>
     </v-footer>
   </v-container>

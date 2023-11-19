@@ -60,7 +60,7 @@
     <!-- Footer -->
     <v-footer color="indigo" app padless>
       <v-col class="text-center white--text" cols="12">
-        © 2023 Your Company Name
+        © 2023 TeleShop
       </v-col>
     </v-footer>
   </v-container>
@@ -74,18 +74,15 @@ export default defineComponent({
 </script>
 
 <script setup>
-  import { ref } from 'vue';
+  // import { ref } from 'vue';
+  import { computed } from "vue";
   import { cart, products, removeFromCart, updateQuantity } from "@/stores/products";
   import router from "@/router";
 
-  const chei = ref([]);
-
-  Object.entries(cart).forEach(([key, value]) => {
-  chei.value.push({
-    product: products.value.find(p => p.id === parseInt(key)),
-    quantity: value
-  });
-});
+  const chei = computed(() => Object.entries(cart).map(([id, quantity]) => ({
+    product: products.value.find(product => product.id === parseInt(id)),
+    quantity
+  })));
 
   const incrementQuantity = (item) => {
     updateQuantity(item.product.id, item.quantity + 1);
