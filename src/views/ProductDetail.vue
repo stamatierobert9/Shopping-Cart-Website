@@ -61,8 +61,10 @@ onMounted(() => {
 
 const getProduct = computed(() => {
   const productId = route.params.id; // Adjust according to your route setup
-  return products.value.find(product => product.id === Number(productId));
+  const product = products.value.find(p => p.id === Number(productId));
+  return product || {}; // Return an empty object if the product is not found
 });
+
 
 const breadcrumbs = computed(() => [
   { text: 'Home', to: '/' },
