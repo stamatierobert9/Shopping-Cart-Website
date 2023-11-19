@@ -1,25 +1,8 @@
 <template>
-  <v-container>
-    <!-- AppBar -->
-    <v-app-bar app color="indigo" dark>
-      <v-toolbar-title>TeleShop</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text color="white"
-             @click="router.push({ name: 'Home' })"
-      >Home</v-btn>
-      <v-btn text color="white"
-             @click="router.push({ name: 'Catalog' })"
-      >Products</v-btn>
-      <v-btn text color="white"
-              @click="router.push({ name: 'CartView' })"
-      >Basket</v-btn>
-    </v-app-bar>
-
     <!-- Main Content -->
     <v-main>
-      <v-container class="fill-height" fluid>
         <v-row justify="center">
-          <v-col cols="12" sm="8" md="6">
+          <v-col cols="12" sm="10" md="12">
             <v-card class="elevation-12" color="grey lighten-4">
               <v-card-title class="headline">
                 Welcome to Our Shop
@@ -36,49 +19,53 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-container>
     </v-main>
 
-    <!-- Footer -->
-    <v-footer color="indigo" app padless>
-      <v-col class="text-center white--text" cols="12">
-        © 2023 TeleShop
-      </v-col>
-    </v-footer>
-  </v-container>
+    <v-carousel>
+      <v-carousel-item v-for="product in products" :key="product.id">
+        <v-card>
+          <v-img :src="product.thumbnail"></v-img>
+          <v-card-title>{{ product.title }}</v-card-title>
+          <v-card-subtitle>${{ product.price }}</v-card-subtitle>
+        </v-card>
+      </v-carousel-item>
+    </v-carousel>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import { VAppBar, VToolbarTitle, VSpacer, VBtn, VMain, VContainer, VRow, VCol, VCard, VCardTitle, VCardText, VCardActions, VFooter } from "vuetify/components";
+import { VBtn, VMain, VRow, VCol, VCard, VCardTitle, VCardText, VCardActions } from "vuetify/components";
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    VAppBar,
-    VToolbarTitle,
-    VSpacer,
     VBtn,
     VMain,
-    VContainer,
     VRow,
     VCol,
     VCard,
     VCardTitle,
     VCardText,
-    VCardActions,
-    VFooter
+    VCardActions
   },
 })
 </script>
 
 <script setup>
 import { useRouter} from "vue-router";
+// import {onMounted, ref} from "vue";
+import {products} from "@/stores/products";
 
 const router = useRouter()
+
+// const products = ref([]);
+//
+// onMounted(async () => {
+//   products.value = await fetchProductsFromDB();
+// });
+
 </script>
 
 
 <style scoped>
-/* You can add custom styles here */
 </style>

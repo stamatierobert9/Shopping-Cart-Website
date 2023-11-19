@@ -5,7 +5,8 @@ import {reactive} from "vue";
 
 export const products= ref([]);
 export let cart=reactive({});
-
+export const snackbar = ref(false);
+export const snackbarText = ref('');
 
 export function fetchProductsFromDB() {
     fetch('https://dummyjson.com/products')
@@ -27,6 +28,8 @@ export function addToCart(product) {
     } else {
         cart[product] = 1
     }
+    snackbarText.value = 'Product added to cart';
+    snackbar.value = true;
 }
 
 export function removeFromCart(productId) {

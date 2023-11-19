@@ -1,33 +1,24 @@
 <template>
-  <v-container>
-    <!-- AppBar -->
-    <v-app-bar app color="indigo" dark>
-      <v-toolbar-title>TeleShop</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text color="white"
-             @click="router.push({ name: 'Home' })"
-      >Home</v-btn>
-      <v-btn text color="white"
-             @click="router.push({ name: 'Catalog' })"
-      >Products</v-btn>
-      <v-btn text color="white"
-             @click="router.push({ name: 'CartView' })"
-      >Basket</v-btn>
-    </v-app-bar>
-
-    <div>
-      <v-btn
-          v-for="category in categories"
-          :key="category"
-          @click="filterByCategory(category)"
-      >
-        {{ category }}
-      </v-btn>
-      <v-btn @click="clearFilter">Show All</v-btn>
-    </div>
-
     <!-- Main Content -->
     <v-main>
+      <!-- Breadcrumb -->
+      <v-breadcrumbs :items="breadcrumbs">
+        <template v-slot:item="{ item }">
+          <v-breadcrumbs-item :to="item.to" :disabled="item.disabled">{{ item.text }}</v-breadcrumbs-item>
+        </template>
+      </v-breadcrumbs>
+
+      <div>
+        <v-btn
+            v-for="category in categories"
+            :key="category"
+            @click="filterByCategory(category)"
+            class="pa-2 ma-1"
+        >
+          {{ category }}
+        </v-btn >
+        <v-btn @click="clearFilter">Show All</v-btn>
+      </div>
       <v-container>
         <v-row>
           <v-col cols="12">
@@ -43,11 +34,11 @@
                 sm="4"
                 @click="goToProductPage(product.id)"
             >
-              <v-sheet class="ma-2 pa-2">
+              <v-sheet class="ma-3 pa-3">
                 <v-card class="product">
                   <v-img :src="product.thumbnail" height="200px" />
-                  <v-card-title>{{ product.brand }}</v-card-title>
-                  <v-card-subtitle>${{ product.price }}</v-card-subtitle>
+                  <v-card-title><h2>{{ product.brand }}</h2></v-card-title>
+                  <v-card-subtitle><h4>${{ product.price }}</h4></v-card-subtitle>
                   <v-card-text>{{ product.description }}</v-card-text>
                 </v-card>
               </v-sheet>
@@ -55,24 +46,14 @@
         </v-row>
       </v-container>
     </v-main>
-
-    <!-- Footer -->
-    <v-footer color="indigo" app padless>
-      <v-col class="text-center white--text" cols="12">
-        © 2023 TeleShop
-      </v-col>
-    </v-footer>
-  </v-container>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-// import ProductItem from "@/components/ProductItem.vue";
+
 export default defineComponent({
   name: 'CatalogView',
-}
-
-)
+})
 </script>
 
 <script setup>
@@ -80,9 +61,9 @@ import { ref, computed, onMounted } from "vue";
 import {fetchProductsFromDB, getUniqueCategories, products} from "@/stores/products";
 import { useRouter } from "vue-router";
 
+
 const router = useRouter();
 const selectedCategory = ref(null);
-
 const categories = computed(() => getUniqueCategories(products.value));
 
 onMounted(() => {
@@ -95,12 +76,14 @@ const filterByCategory = (category) => {
 };
 
 const filteredProducts = computed(() => {
-  if (!selectedCategory.value || !Array.isArray(products.value)) {
-    return [];
+  if (!selectedCategory.value) {
+    return products.value; // Return all products if no category is selected
+  }
+  if (!Array.isArray(products.value)) {
+    return []; // Return an empty array if products.value is not an array
   }
   return products.value.filter(product => product.category === selectedCategory.value);
 });
-
 
 const clearFilter = () => {
   selectedCategory.value = null;
@@ -110,9 +93,10 @@ const goToProductPage = (id) => {
   router.push({ name: 'ProductView', params: { id } });
 };
 
-// Inside your script setup or mounted hook
-console.log(products.value);
-
+const breadcrumbs = computed(() => [
+  { text: 'Home', to: '/' },
+  { text: 'Catalog', to: '/Products' },
+]);
 </script>
 
 

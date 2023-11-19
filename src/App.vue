@@ -1,78 +1,47 @@
 <template>
   <v-app>
-  <header>
-    <v-toolbar dark>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar app color="indigo" dark>
       <v-toolbar-title>TeleShop</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-sheet
-          class="mx-auto"
-          max-width="600"
-      >
-        <v-slide-group
-            show-arrows
-        >
-          <v-slide-group-item
-              v-for="n in categories"
-              :key="n"
-              v-slot="{ isSelected, toggle }"
-          >
-            <v-btn
-                class="ma-2"
-                rounded
-                :color="isSelected ? 'primary' : undefined"
-                @click="toggle"
-            >
-               {{ n }}
-            </v-btn>
-          </v-slide-group-item>
-        </v-slide-group>
-      </v-sheet>
-
       <v-spacer></v-spacer>
 
-      <v-btn
-          @click="router.push({ name: 'Catalog' })"
-          color="primary"
-          variant="elevated"
-      >Catalog
-      </v-btn>
+      <!-- Navigation Buttons -->
+      <v-btn @click="router.push({ name: 'Catalog' })" text color="white">Catalog</v-btn>
+      <v-btn @click="router.push({ name: 'Home' })" text color="white">Home</v-btn>
 
-      <v-btn
-          @click="router.push({ name: 'Home' })"
-          color="primary"
-          variant="elevated"
-      >Home
-      </v-btn>
-
-      <v-btn flat
-          @click="router.push({ name: 'CartView' })"
-      >
-        <v-badge
-            color="blue"
-            :content="cart.length"
-        >
-          <v-icon>
-            shopping_cart
-          </v-icon>
-          Basket
+      <!-- Cart Button with Badge -->
+      <v-btn text color="white" @click="router.push({ name: 'CartView' })">
+        <v-badge color="red" :content="cartItemCount">
+          <v-icon>mdi-cart</v-icon>
         </v-badge>
+        Basket
       </v-btn>
-    </v-toolbar>
-  </header>
-  <main>
-    <RouterView />
-  </main>
+    </v-app-bar>
+
+    <main>
+      <RouterView />
+    </main>
+
+    <!-- Footer (if needed) -->
+    <v-footer color="indigo" app padless>
+      <v-col class="text-center white--text" cols="12">
+        © 2023 TeleShop
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
 import { cart } from "@/stores/products";
-import {categories} from "@/stores/products";
+import {computed} from "vue";
 
 const router = useRouter()
+
+const cartItemCount = computed(() => {
+  return Object.values(cart).reduce((total, quantity) => total + quantity, 0);
+});
+
 </script>
 
 
