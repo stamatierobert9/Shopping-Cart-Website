@@ -1,27 +1,45 @@
 <template>
+  <v-container>
+    <!-- AppBar -->
+    <v-app-bar app color="indigo" dark>
+      <v-toolbar-title>TeleShop</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text color="white" @click="router.push({ name: 'Home' })">Home</v-btn>
+      <v-btn text color="white" @click="router.push({ name: 'Catalog' })">Products</v-btn>
+      <v-btn text color="white" @click="router.push({ name: 'CartView' })">Basket</v-btn>
+    </v-app-bar>
 
-  <v-btn
-      @click="router.push({ name: 'Catalog' })"
-      color="primary"
-      variant="elevated">
-    Back to catalog
-  </v-btn>
+    <!-- Main Content -->
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <h1 class="text-h4 py-4">{{ getProduct.title }}</h1>
+          </v-col>
+        </v-row>
 
-  <div class="product">
-    <div class="product-image">
-      <img :src="selectedProduct.thumbnail" alt="">
-    </div>
-    <div class="product-details">
-      <p>Brand: {{ selectedProduct.brand }}</p>
-      <p>Description: {{ selectedProduct.description }}</p>
-      <h2>Price: ${{ selectedProduct.price }}</h2>
-      <v-btn
-          variant="elevated"
-          color="indigo-lighten-3"
-          @click="addToCart"
-      >Add to cart</v-btn>
-    </div>
-  </div>
+        <v-row no-gutters>
+          <v-col cols="12" sm="6">
+            <v-img :src="getProduct.thumbnail" height="300px" />
+          </v-col>
+          <v-col cols="12" sm="6">
+            <p>Brand: {{ getProduct.brand }}</p>
+            <p>Category: {{ getProduct.category }}</p>
+            <p>Description: {{ getProduct.description }}</p>
+            <h2>Price: ${{ getProduct.price }}</h2>
+            <v-btn color="primary" @click="addToCart(getProduct.id)">Add to cart</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+
+    <!-- Footer -->
+    <v-footer color="indigo" app padless>
+      <v-col class="text-center white--text" cols="12">
+        © 2023 Your Company Name
+      </v-col>
+    </v-footer>
+  </v-container>
 </template>
 
 <script>
@@ -32,22 +50,22 @@ export default defineComponent({
 </script>
 
 <script setup>
-import { computed } from "vue";
-import { productsStore } from "@/stores/products";
-import { useRoute, useRouter } from "vue-router";
+import {computed, onMounted} from "vue";
+import { fetchProductsFromDB, products } from "@/stores/products";
+import { useRouter, useRoute } from "vue-router";
+import { addToCart } from "@/stores/products";
 
-const store = productsStore();
 const router = useRouter();
 const route = useRoute();
 
-const selectedProduct = computed(() => {
-  return store.products.find((item) => item.id === Number(route.params.id));
+onMounted(() => {
+  fetchProductsFromDB();
 });
 
-const addToCart = () => {
-  store.addToCart(selectedProduct.value);
-  // $emit('incquantity', selectedProduct.value.id)
-}
+const getProduct = computed(() => {
+  const productId = route.params.id; // Adjust according to your route setup
+  return products.value.find(product => product.id === Number(productId));
+});
 </script>
 
 <style scoped>

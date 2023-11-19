@@ -8,7 +8,11 @@ const router = createRouter({
   history:createWebHashHistory(),
   routes: [
     {
-      path: '/',
+      path: '/json',
+      name: 'Json'
+    },
+    {
+      path: '/Products',
       name: 'Catalog',
       component: Catalog
     },
@@ -23,9 +27,9 @@ const router = createRouter({
       component: Cart
     },
     {
-      path: '/home',
+      path: '/',
       name: 'Home',
-      compoinent: Home
+      component: Home
     }
   ]
 })

@@ -1,30 +1,61 @@
-import { defineStore } from 'pinia'
+import router from "@/router";
+import {ref} from "vue";
 
 
-export const productsStore = defineStore('products', {
-    state: () => ({
-        products: [],
-        cart: []
-    }),
+export const products= ref([]);
+export let cart={};
 
-    actions: {
-        fetchProductsFromDB() {
-            fetch('https://dummyjson.com/products')
-                .then(res => res.json())
-                .then(json => {
-                    this.products = json.products;
-                    this.products.quantity = 0;
-                })
 
-        },
+export function fetchProductsFromDB() {
+    fetch('https://dummyjson.com/products')
+        .then(res => res.json())
+        .then(json => {
+            console.log('Fetched products:', json.products); // Log to check
+            products.value = json.products; // Assuming products is a ref
+        })
+        .catch(err => console.error('Error fetching products:', err));
+}
 
-        addToCart(product) {
-            this.cart.push(product)
-        },
 
-        removeFromCart(id) {
-            console.log('>>>>> ID', id)
-            this.cart = this.cart.filter((item) => item.id !== id)
-        }
+
+export function addToCart(product) {
+    // cart.push(product)
+    console.log(product in cart)
+    if(product in cart){
+        cart[product] += 1
+    } else {
+        cart[product] = 1
     }
-})
+}
+
+export function removeFromCart(id) {
+    console.log('>>>>> ID', id)
+    delete cart[id]
+    console.log('>>>>> CART', cart)
+    router.push({name: 'CartView'})
+}
+
+export function getUniqueCategories() {
+    const categories = new Set();
+    products.value.forEach(product => {
+        categories.add(product.category);
+    });
+    return Array.from(categories);
+}
+
+export function sortProductsByCategory() {
+    const sortedProducts = {};
+    products.value.forEach(product => {
+        if (!sortedProducts[product.category]) {
+            sortedProducts[product.category] = [];
+        }
+        sortedProducts[product.category].push(product);
+    });
+    return sortedProducts;
+}
+
+export function updateQuantity(productId, newQuantity) {
+    if (cart[productId]) {
+        cart[productId] = newQuantity;
+    }
+}
