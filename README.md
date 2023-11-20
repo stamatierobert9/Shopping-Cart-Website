@@ -1,4 +1,4 @@
-# hello-world
+# TeleShop Website
 
 ## Project setup
 ```
