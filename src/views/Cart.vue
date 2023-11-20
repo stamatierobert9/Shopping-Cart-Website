@@ -26,7 +26,7 @@
               </v-col>
 
               <!-- Quantity Controls -->
-              <v-col cols="6" md="2" class="quantity-controls">
+              <v-col cols="6" md="3" class="quantity-controls">
                 <v-btn
                     icon="$minus"
                     @click="decrementQuantity(item)">
@@ -111,6 +111,6 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 8px 0; /* Add padding for better spacing */
+  padding: 10px 0; /* Add padding for better spacing */
 }
 </style>

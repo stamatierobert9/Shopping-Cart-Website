@@ -12,7 +12,6 @@ export function fetchProductsFromDB() {
     fetch('https://dummyjson.com/products')
         .then(res => res.json())
         .then(json => {
-            console.log('Fetched products:', json.products); // Log to check
             products.value = json.products; // Assuming products is a ref
         })
         .catch(err => console.error('Error fetching products:', err));
