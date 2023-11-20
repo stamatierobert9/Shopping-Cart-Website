@@ -24,8 +24,6 @@ if (savedCart) {
 }
 
 export function addToCart(product) {
-    // cart.push(product)
-    console.log(product in cart)
     if(product in cart){
         cart[product] += 1
     } else {

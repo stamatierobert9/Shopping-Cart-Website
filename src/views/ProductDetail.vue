@@ -32,7 +32,7 @@
         </v-row>
       </v-container>
     </v-main>
-  <v-snackbar v-model="snackbar" :timeout="2000" color="success" class="custom-snackbar" >
+  <v-snackbar v-model="snackbar" :timeout="1000" color="success" class="custom-snackbar" >
     {{ snackbarText }}
     <template v-slot:action="{ attrs }">
       <v-btn color="white" text v-bind="attrs" @click="snackbar = false">Close</v-btn>

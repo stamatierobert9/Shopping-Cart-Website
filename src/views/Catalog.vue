@@ -67,7 +67,6 @@ const selectedCategory = ref(null);
 const categories = computed(() => getUniqueCategories(products.value));
 
 onMounted(() => {
-  console.log('CatalogView mounted');
   fetchProductsFromDB();
 });
 

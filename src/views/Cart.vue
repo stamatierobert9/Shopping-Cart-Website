@@ -4,7 +4,11 @@
     <v-container class="fill-height" fluid>
       <v-row justify="center">
         <!-- Display Cart Items -->
-        <v-col cols="12" v-for="item in chei" :key="item.product.id">
+        <v-col
+            cols="12"
+            v-for="item in chei"
+            :key="item.product.id"
+        >
           <v-card class="mb-3 cart-item">
 
               <!-- Product Image -->
