@@ -8,18 +8,34 @@
         </template>
       </v-breadcrumbs>
 
-      <div>
-        <v-btn
-            v-for="category in categories"
-            :key="category"
-            @click="filterByCategory(category)"
-            class="pa-2 ma-1"
-        >
-          {{ category }}
-        </v-btn >
-        <v-btn @click="clearFilter">Show All</v-btn>
-      </div>
+      <!-- Category Selector -->
       <v-container>
+        <v-row>
+          <!-- Dropdown for small screens -->
+          <v-col cols="12" sm="auto" class="d-sm-none">
+            <v-select
+                v-model="selectedCategory"
+                :items="categories"
+                label="Select Category"
+                solo
+                dense
+                @change="filterByCategory(selectedCategory)"
+            ></v-select>
+          </v-col>
+
+          <!-- Buttons for larger screens -->
+          <v-col cols="12" class="d-none d-sm-flex">
+            <v-btn
+                v-for="category in categories"
+                :key="category"
+                @click="filterByCategory(category)"
+                class="ma-1"
+            >
+              {{ category }}
+            </v-btn>
+            <v-btn @click="clearFilter">Show All</v-btn>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col cols="12">
             <h1 class="text-h4 py-4">Our Products</h1>
