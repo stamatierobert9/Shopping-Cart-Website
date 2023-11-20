@@ -21,6 +21,7 @@
                 dense
                 @change="filterByCategory(selectedCategory)"
             ></v-select>
+            <v-btn @click="clearFilter">Show All</v-btn>
           </v-col>
 
           <!-- Buttons for larger screens -->
