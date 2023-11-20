@@ -22,7 +22,11 @@
     </v-main>
 
     <v-carousel>
-      <v-carousel-item v-for="product in products" :key="product.id">
+      <v-carousel-item
+          v-for="product in products"
+          :key="product.id"
+          @click="goToProductPage(product.id)"
+      >
         <v-card>
           <v-img :src="product.thumbnail"></v-img>
           <v-card-title>{{ product.title }}</v-card-title>
@@ -53,16 +57,20 @@ export default defineComponent({
 
 <script setup>
 import { useRouter} from "vue-router";
-// import {onMounted, ref} from "vue";
-import {products} from "@/stores/products";
+import {onMounted} from "vue";
+import {fetchProductsFromDB, products} from "@/stores/products";
 
 const router = useRouter()
 
 // const products = ref([]);
-//
-// onMounted(async () => {
-//   products.value = await fetchProductsFromDB();
-// });
+
+onMounted(async () => {
+  products.value = await fetchProductsFromDB();
+});
+
+const goToProductPage = (id) => {
+  router.push({ name: 'ProductView', params: { id } });
+};
 
 </script>
 

@@ -8,7 +8,7 @@
           v-model="searchQuery"
           @input="filterProducts"
           hide-details
-          prepend-icon="mdi-magnify"
+          prepend-icon="$edit"
           single-line
           placeholder="Search products"
           clearable
@@ -31,8 +31,15 @@
       <v-btn @click="router.push({ name: 'Catalog' })" text color="white">Catalog</v-btn>
       <v-btn @click="router.push({ name: 'Home' })" text color="white">Home</v-btn>
       <v-btn text color="white" @click="router.push({ name: 'CartView' })">
-        <v-badge color="red" :content="cartItemCount">
-          <v-icon>mdi-cart</v-icon>
+        <v-badge
+            color="red"
+            class="pa-2"
+            :content="cartItemCount">
+          <v-icon
+              icon="$vuetify"
+              size="large"
+              color="succes"
+          ></v-icon>
         </v-badge>
         Basket
       </v-btn>
@@ -94,7 +101,6 @@ const goToProductPage = (id) => {
   cursor: pointer;
 }
 
-/* Additional styles for search results */
 .search-results {
   position: absolute;
   z-index: 100;

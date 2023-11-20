@@ -23,12 +23,14 @@
 
               <!-- Quantity Controls -->
               <v-col cols="6" md="2" class="quantity-controls">
-                <v-btn small icon @click="decrementQuantity(item)">
-                  <v-icon>mdi-minus</v-icon>
+                <v-btn
+                    icon="$minus"
+                    @click="decrementQuantity(item)">
                 </v-btn>
                 <span>{{ item.quantity }}</span>
-                <v-btn small icon @click="incrementQuantity(item)">
-                  <v-icon>mdi-plus</v-icon>
+                <v-btn
+                    icon="$plus"
+                    @click="incrementQuantity(item)">
                 </v-btn>
               </v-col>
 

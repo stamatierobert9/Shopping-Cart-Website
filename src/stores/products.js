@@ -18,7 +18,10 @@ export function fetchProductsFromDB() {
         .catch(err => console.error('Error fetching products:', err));
 }
 
-
+const savedCart = localStorage.getItem('cart');
+if (savedCart) {
+    Object.assign(cart, JSON.parse(savedCart));
+}
 
 export function addToCart(product) {
     // cart.push(product)
@@ -28,6 +31,7 @@ export function addToCart(product) {
     } else {
         cart[product] = 1
     }
+    updateLocalStorage()
     snackbarText.value = 'Product added to cart';
     snackbar.value = true;
 }
@@ -35,6 +39,7 @@ export function addToCart(product) {
 export function removeFromCart(productId) {
     if (cart[productId]) {
         delete cart[productId];
+        updateLocalStorage()
     }
 }
 
@@ -60,5 +65,10 @@ export function sortProductsByCategory() {
 export function updateQuantity(productId, newQuantity) {
     if (cart[productId]) {
         cart[productId] = newQuantity;
+        updateLocalStorage()
     }
+}
+
+function updateLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
