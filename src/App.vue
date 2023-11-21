@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="indigo" dark>
       <v-toolbar-title>TeleShop</v-toolbar-title>
-
+      <v-spacer></v-spacer>
       <!-- Search Bar -->
       <v-text-field
           v-model="searchQuery"
